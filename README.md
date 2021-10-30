@@ -25,7 +25,7 @@ worldsales.csv
 ## Key variables:
 
 | Id | Region | Country | Item_Type | Sales_Channel | Order_Priority | Order_Date | Order_ID | Ship_Date | Units_Sold | Unit_Price | Unit_Cost | Total_Revenue | Total_Cost | Total_Profit | 
-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
+|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
 
 ## Conclusion:
 
@@ -41,29 +41,44 @@ Upload the file worldsales.csv to HDFS’s tmp folder
 
 ![Screenshot 2021-06-23 214558](https://user-images.githubusercontent.com/70437668/139509148-a72afb57-ab13-4537-98bf-bcbf8550fbe6.png)
 
+### 2. Create external table in Hive for analysis in Zeppelin
+-- Hive
+```
+CREATE EXTERNAL TABLE IF NOT EXISTS worldsales (Id INT, Region STRING, Country STRING, Item_Type STRING, Sales_Channel STRING, Order_Priority STRING, Order_Date DATETIME, Order_ID INT, 
+Ship_Date DATETIME, Units_Sold INT, Unit_Price INT, Unit_Cost INT, Total_Revenue DOUBLE, Total_Cost DOUBLE, Total_Profit DOUBLE)
+COMMENT 'Data of the World Sales'
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+STORED AS TEXTFILE
+LOCATION '/tmp/worldsales'
+```
+
+-- Zeppelin
+-- Spark
+
 #### Load data into Zeppelin
 
 ```
 // Create a worldsales DataFrame from CSV file
 %spark2
 val worldsales = (spark.read 
-.option("header", "true") // Use first line as header
-.option("inferSchema", "true") // Infer schema
+.option("header", "true") --// Use first line as header
+.option("inferSchema", "true") --// Infer schema
 .csv("/tmp/worldsales.csv"))
 ```
 
 ![Screenshot 2021-06-23 214558](https://user-images.githubusercontent.com/70437668/139515167-f08f5659-755f-4513-9a6c-5de3d52f753f.png)
 
-### 2.	Show the newly created dataframe 
+### 3.	Show the newly created dataframe 
 
 ```
 %spark2
-worldsales.select(“Id”, “Region”, “Country”, “Item_Type”, “Sales_Channel”, “Order_Priority”, “Order_Date”, “Order_ID”, “Ship_Date”, “Units_Sold”, “Unit_Price”, “Unit_Cost”, “Total_Revenue”, “Total_Cost”, “Total Profit”).show()
+worldsales.select("Id", "Region", "Country", "Item_Type", "Sales_Channel", "Order_Priority", "Order_Date", "Order_ID", "Ship_Date", "Units_Sold", "Unit_Price", "Unit_Cost", "Total_Revenue", "Total_Cost", "Total Profit").show()
 ```
 
 ![Screenshot 2021-06-23 220234](https://user-images.githubusercontent.com/70437668/139509159-ef5ddbc4-ac14-40a1-8c47-ccaf69de97cf.png)
 
-### 3. Print the dataframe schema  
+### 4. Print the dataframe schema  
 ```
 %spark2
 // Print the Schema in a tree format
@@ -72,7 +87,7 @@ worldsales.printSchema()
 
 ![Screenshot 2021-06-23 220419](https://user-images.githubusercontent.com/70437668/139509177-65606a0a-ea5e-4744-bca0-7305d455637e.png)
 
-### 4. Filter the dataframe to show units sold > 8000 and unit cost > 500
+### 5. Filter the dataframe to show units sold > 8000 and unit cost > 500
 
 #### Method 1:
 ```
@@ -95,7 +110,7 @@ worldsales.filter("Units_Sold" > 8000 && "Unit_Cost" > 500).show()
 
 This led to only 2 Sub-Saharan countries: Senegal and Swaziland after the filteration. Senegal's Units Sold was 8,989 and Unit Cost was 502.54 while Swaziland's Units Sold was 9,915 and Unit Cost was 524.96. Both has the same Sales Channel as Offline.
 
-### 5.	Show the dataframe in group by “Region” and count
+### 6.	Show the dataframe in group by “Region” and count
 ```
 %spark2
 worldsales.groupBy("region").count().show()
@@ -105,17 +120,17 @@ worldsales.groupBy("region").count().show()
 
 ![Count by Region](https://user-images.githubusercontent.com/70437668/139518778-ac9ba5d1-78c1-4c9e-8155-ff0d17553026.jpg)
 
-### 6.	Create a separate dataframe with the group by results
+### 7.	Create a separate dataframe with the group by results
 ```
 %spark2
-val worldsales_results = worldsales.groupBy(“region”).count()
+val worldsales_results = worldsales.groupBy("region").count()
 worldsales_results.show()
 ```
 ![Q6](https://user-images.githubusercontent.com/70437668/139517566-ad7106c8-94f3-4656-bb50-66219e825c50.png)
 
 There were the most activities in Sub-Saharan Africa and Europe. Meanwhile, North America and Australia and Oceania wasn't active in trading with Sub-Saharan Africa.
 
-### 7.	Save the new subset dataframe as a CSV file into HDFS
+### 8.	Save the new subset dataframe as a CSV file into HDFS
 ```
 %spark2
 worldsales_results.coalesce(1).write.format(“csv”).option(“header”, “true”).save(“/tmp/worldsales_results.csv”)
@@ -123,9 +138,9 @@ worldsales_results.coalesce(1).write.format(“csv”).option(“header”, “t
 
 ![Q7 results](https://user-images.githubusercontent.com/70437668/139509021-3041b3e1-2a11-40fe-a45b-abbb61765275.png)
 
-### 8.	Create two views using the “createOrReplaceTempView” command
+### 9.	Create two views using the “createOrReplaceTempView” command
 
-#### 8.a.	View on “Salesview” from the first dataframe
+#### 9.a.	View on “Salesview” from the first dataframe
 ```
 %spark2
 worldsales.createOrReplaceTempView(“Salesview”)
@@ -133,7 +148,7 @@ worldsales.createOrReplaceTempView(“Salesview”)
 
 ![Q8 1](https://user-images.githubusercontent.com/70437668/139509034-16f1823f-ccdb-4621-89bd-b3ba4c6b670d.png)
 
-#### 8.b.	View on “Regionview” from the second dataframe 
+#### 9.b.	View on “Regionview” from the second dataframe 
 ```
 %spark2
 Worldsales_results.createOrReplaceTempView(“Regionview”)
@@ -141,7 +156,8 @@ Worldsales_results.createOrReplaceTempView(“Regionview”)
 
 ![Q8 2](https://user-images.githubusercontent.com/70437668/139509039-11506d7e-3399-4a63-9173-4b2b3c6e9870.png)
 
-### 9.	Using SQL select all from “Regionview” view and show in a line graph 
+### -- SQL
+### 10.	Using SQL select all from “Regionview” view and show in a line graph 
 ```
 %spark2.sql
 SELECT * FROM Regionview
@@ -153,7 +169,7 @@ SELECT * FROM Regionview
 
 The Line chart illustrates the dynamic Sales & Trading activities between Europe and Sub-Saharan Africa. But there was no energetic performance between North America, Australia & Oceania and Sub-Sharan Africa.
 
-### 10.	Using SQL select from the “Salesview” view – the region and sum of units sold and group by region and display in a data grid view 
+### 11.	Using SQL select from the “Salesview” view – the region and sum of units sold and group by region and display in a data grid view 
 ```
 %spark2.sql
 SELECT region, SUM(Units_Sold) AS Sum_Units_Sold
@@ -167,7 +183,7 @@ GROUP BY region
 
 There was a positive correlation of Sum Units Sold between Europe and Sub-Saharan Africa. These two regions and continents had the highest Sum Units Sold. In contrast, North America, Australia & Oceania had the lowest Sum Units Sold. Other regions and continents played moderately around the average Sum Units Sold.
 
-### 11.	Using SQL select from the “Salesview” view – the region and sum of total_profit and group by region and display in a Bar chart 
+### 12.	Using SQL select from the “Salesview” view – the region and sum of total_profit and group by region and display in a Bar chart 
 ```
 %spark2.sql
 SELECT region, SUM(Total_Profit)
@@ -179,7 +195,7 @@ GROUP BY region
 
 Europe and Sub-Saharan Africa certainly dominated Sum of Total Profit, ranking 2nd and 1st, respectively. North America, Australia & Oceania in the other hand gained the lowest Sum of Total Profit.
 
-### 12.	From the “Salesview” view, show the Total Profit as Profit, the Total Revenue as Revenue and the Total Cost as Cost from “Salesview” group by Region – The client wants to see this data in a Line chart in order to see the correlation between Cost, Revenue, Profit between Regions.
+### 13.	From the “Salesview” view, show the Total Profit as Profit, the Total Revenue as Revenue and the Total Cost as Cost from “Salesview” group by Region – The client wants to see this data in a Line chart in order to see the correlation between Cost, Revenue, Profit between Regions.
 ```
 %spark2.sql
 SELECT region, SUM(Total_Profit) AS Profit, SUM(total_revenue) AS Revenue, SUM(total_cost) AS Cost
@@ -203,7 +219,7 @@ The correlations between these fields between Regions were the same. Europe and 
 
 ![Average Profit by Region on Map](https://user-images.githubusercontent.com/70437668/139518826-f9d1a798-4f11-4a87-9de6-65e9206ebbed.jpg)
 
-### 13.	The customer is planning to open up a new store and searching for the best location for it, they need to see the Average Profit in each Region as a percentage (Pie chart) compared to other Regions
+### 14.	The customer is planning to open up a new store and searching for the best location for it, they need to see the Average Profit in each Region as a percentage (Pie chart) compared to other Regions
 
 Now I will use both views created to plot the Pie chart and also point out the region where it is most profitable. 
 
