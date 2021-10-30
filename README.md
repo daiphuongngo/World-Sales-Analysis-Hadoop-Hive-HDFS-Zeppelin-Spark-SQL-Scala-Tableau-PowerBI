@@ -2,17 +2,9 @@
 
 ## Overview:
 
-## Dataset:
+The World Sales here is a small dataset used to demonstrate skills in both Big Data and Visualization platforms, languages and tools. The target of this project is to determine the most profitable Region and Country by different factors and methods.
 
-worldsales.csv
-
-## Key variables:
-
-| Id | Region | Country | Item_Type | Sales_Channel | Order_Priority | Order_Date | Order_ID | Ship_Date | Units_Sold | Unit_Price | Unit_Cost | Total_Revenue | Total_Cost | Total_Profit | 
-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
-
-
-## Language and Tools:
+## Platforms, Languages and Tools:
 
 - Hadoop
 
@@ -27,6 +19,15 @@ worldsales.csv
 - Scala
 
 - SQL
+
+## Dataset:
+
+worldsales.csv
+
+## Key variables:
+
+| Id | Region | Country | Item_Type | Sales_Channel | Order_Priority | Order_Date | Order_ID | Ship_Date | Units_Sold | Unit_Price | Unit_Cost | Total_Revenue | Total_Cost | Total_Profit | 
+|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
 
 ## Table of Content:
 
