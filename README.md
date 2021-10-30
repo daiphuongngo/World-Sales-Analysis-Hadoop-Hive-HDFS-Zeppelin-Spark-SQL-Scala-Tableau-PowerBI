@@ -1,4 +1,4 @@
-# World-Sales-Analysis-Zeppelin-Spark-Scala-SQL
+# World-Sales-Analysis-Hadoop-Hive-Zeppelin-Spark-SQL-Scala-Tableau
 
 ## Overview:
 
