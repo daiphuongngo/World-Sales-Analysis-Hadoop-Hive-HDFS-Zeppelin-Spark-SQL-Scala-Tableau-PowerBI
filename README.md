@@ -6,6 +6,12 @@
 
 worldsales.csv
 
+## Key variables:
+
+| Id | Region | Country | Item_Type | Sales_Channel | Order_Priority | Order_Date | Order_ID | Ship_Date | Units_Sold | Unit_Price | Unit_Cost | Total_Revenue | Total_Cost | Total_Profit | 
+|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
+
+
 ## Language and Tools:
 
 - Hadoop
@@ -69,9 +75,9 @@ worldsales.printSchema()
 ```
 %spark2
 // Create a Dataset containing worldsales with units sold and unit price using “filter”
-val worldsales_dataset = worldsales.select((“Id”, “Region”, “Country”, “Item_Type”, “Sales_Channel”, “Order_Priority”, “Order_Date”, “Order_ID”, “Ship_Date”, “Units_Sold”, “Unit_Price”, “Unit_Cost”, “Total_Revenue”, “Total_Cost”, “Total Profit”)
-					.filter($”Units_Sold” > 8000)
-					.filter($”Unit_Cost” > 500)
+val worldsales_dataset = worldsales.select(("Id", "Region", "Country", "Item_Type", "Sales_Channel", "Order_Priority", "Order_Date", "Order_ID", "Ship_Date", "Units_Sold", "Unit_Price", "Unit_Cost", "Total_Revenue", "Total_Cost", "Total Profit")
+					.filter($"Units_Sold" > 8000)
+					.filter($"Unit_Cost" > 500)
 worldsales_dataset.show()
 ```
 
@@ -82,10 +88,12 @@ worldsales.filter("Units_Sold" > 8000 && "Unit_Cost" > 500).show()
 
 ![Screenshot 2021-06-23 221000](https://user-images.githubusercontent.com/70437668/139509184-81b9419d-24f9-4c01-a3c6-fe5505de97e0.png)
 
+This led to only 2 Sub-Saharan countries: Senegal and Swaziland after the filteration. Senegal's Units Sold was 8,989 and Unit Cost was 502.54 while Swaziland's Units Sold was 9,915 and Unit Cost was 524.96. Both has the same Sales Channel as Offline.
+
 ### 5.	Show the dataframe in group by “Region” and count
 ```
 %spark2
-worldsales.groupBy(“region”).count().show()
+worldsales.groupBy("region").count().show()
 ```
 
 ![Q5 ](https://user-images.githubusercontent.com/70437668/139508998-7629e595-4100-4179-8564-fb2307e26dce.png)
@@ -99,7 +107,7 @@ worldsales.groupBy(“region”).count().show()
 
 ![Q5 ](https://user-images.githubusercontent.com/70437668/139509006-da033a7a-a815-4dce-8e07-a3ec880d4655.png)
 
-
+There were the most activities in Sub-Saharan Africa and Europe. Meanwhile, North America and Australia and Oceania wasn't active in trading with Sub-Saharan Africa.
 ### 7.	Save the new subset dataframe as a CSV file into HDFS
 ```
 %spark2
@@ -134,6 +142,8 @@ SELECT * FROM Regionview
 
 ![Q9](https://user-images.githubusercontent.com/70437668/139509047-e583dd08-7f36-4922-a06f-b80e80ad643a.png)
 
+The Line chart illustrates the dynamic Sales & Trading activities between Europe and Sub-Saharan Africa. But there was no energetic performance between North America, Australia & Oceania and Sub-Sharan Africa.
+
 ### 10.	Using SQL select from the “Salesview” view – the region and sum of units sold and group by region  and display in a data grid view 
 ```
 %spark2.sql
@@ -143,6 +153,8 @@ GROUP BY region
 ```
 
 ![Q10](https://user-images.githubusercontent.com/70437668/139509057-dad4d738-e4d3-4a9e-ae11-a5bca4cf4ac8.png)
+
+There was a positive correlation of Sum Units Sold between Europe and Sub-Saharan Africa. These two regions and continents had the highest Sum Units Sold. In contrast, North America, Australia & Oceania had the lowest Sum Units Sold. Other regions and continents played moderately around the average Sum Units Sold.
 
 ### 11.	Using SQL select from the “Salesview” view – the region and sum of total_profit and group by region and display in a Bar chart 
 ```
@@ -154,7 +166,9 @@ GROUP BY region
 
 ![Q11](https://user-images.githubusercontent.com/70437668/139509063-26305d3c-b2cf-4dd5-8e89-7a8e6b3ffa65.png)
 
-### 12.	Using SQL select from the “Salesview” view – show the total profit as profit, the total revenue as revenue and the total cost as cost from “Salesview” group by region – The client wants to see this data in a line graph so as to see the correlation between cost ,revenue ,profit between regions.
+Europe and Sub-Saharan Africa certainly dominated Sum of Total Profit, ranking 2nd and 1st, respectively. North America, Australia & Oceania in the other hand gained the lowest Sum of Total Profit.
+
+### 12.	From the “Salesview” view, show the Total Profit as Profit, the Total Revenue as Revenue and the Total Cost as Cost from “Salesview” group by Region – The client wants to see this data in a Line chart in order to see the correlation between Cost, Revenue, Profit between Regions.
 ```
 %spark2.sql
 SELECT region, SUM(Total_Profit) AS Profit, SUM(total_revenue) AS Revenue, SUM(total_cost) AS Cost
@@ -166,7 +180,12 @@ GROUP BY region
 
 ![Q12](https://user-images.githubusercontent.com/70437668/139509090-ac994010-86a9-4954-b104-1680483bf250.png)
 
-### 13.	The customer is in the process of opening up a new store an they are looking at the best location to do so, they need to see the avg profit in each region as a percentage (pie chart) compared to other regions, please use both views created to demonstrate answer also point out the region where it is most profitable. 
+The correlations between these fields between Regions were the same. Europe and Sub-Saharan Africa gained the highest figures in all 3 fields while North America, Australia & Oceania's fields were significantly low.
+
+### 13.	The customer is planning to open up a new store and searching for the best location for it, they need to see the Average Profit in each Region as a percentage (Pie chart) compared to other Regions
+
+Now I will use both views created to plot the Pie chart and also point out the region where it is most profitable. 
+
 ```
 %spark2.sql
 SELECT a.Region, AVG(Total_Profit) 
@@ -174,10 +193,9 @@ FROM Salesview b , Regionview a
 WHERE a.Region = b.Region
 GROUP BY a.Region
 ```
---> Europe's Average Profit at 27% is the highest among all continents.
 
 ![Q13 - Orren's solution on pie chart](https://user-images.githubusercontent.com/70437668/139509118-49ccd97a-31a5-40bf-9f35-bd668d27e906.png)
 
-
+The Pie chart demonstrates that Europe and Sub-Saharan Africa took half of the worldwide Total Profit. Europe's Average Profit at 27% is the highest among all continents. Thefore, it is proven that Europe would be the most profitable Region.
 
 
