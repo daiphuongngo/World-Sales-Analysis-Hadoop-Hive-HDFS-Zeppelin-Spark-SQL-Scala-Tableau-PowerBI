@@ -49,7 +49,7 @@ val worldsales = (spark.read
 .csv("/tmp/worldsales.csv"))
 ```
 
-![image](https://user-images.githubusercontent.com/70437668/139509201-3073af0b-df1d-4353-96f3-f7b1847942c9.png)
+![Screenshot 2021-06-23 214558](https://user-images.githubusercontent.com/70437668/139515167-f08f5659-755f-4513-9a6c-5de3d52f753f.png)
 
 ### 2.	Show the newly created dataframe 
 
