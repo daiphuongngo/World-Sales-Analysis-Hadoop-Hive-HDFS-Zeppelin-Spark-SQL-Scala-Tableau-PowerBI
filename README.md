@@ -29,6 +29,10 @@ worldsales.csv
 | Id | Region | Country | Item_Type | Sales_Channel | Order_Priority | Order_Date | Order_ID | Ship_Date | Units_Sold | Unit_Price | Unit_Cost | Total_Revenue | Total_Cost | Total_Profit | 
 |-|-|-|-|-|-|-|-|-|-|-|-|-|-|
 
+## Conclusion:
+
+Europe is the most profitable region. Belarus is the most profitable country worldwide.
+
 ## Table of Content:
 
 ### 1. Load data
