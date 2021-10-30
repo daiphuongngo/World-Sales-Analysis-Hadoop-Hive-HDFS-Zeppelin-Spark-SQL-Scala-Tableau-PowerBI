@@ -18,6 +18,8 @@ The World Sales here is a small dataset used to demonstrate skills in both Big D
 
 - SQL
 
+- Tableau
+
 ## Dataset:
 
 worldsales.csv
