@@ -112,6 +112,9 @@ worldsales.filter("Units_Sold" > 8000 && "Unit_Cost" > 500).show()
 
 ![Filter](https://user-images.githubusercontent.com/70437668/139518775-b0bfec6a-5f44-4671-b51a-2d5cceeda13f.jpg)
 
+![Regions with Unit Sold greater than 8,000 and Unit Cost greater than 500](https://user-images.githubusercontent.com/70437668/140601839-4990e8d4-c366-47cf-a64e-c7771a3e789e.jpg)
+
+
 This led to only 2 Sub-Saharan countries: Senegal and Swaziland after the filteration. Senegal's Units Sold was 8,989 and Unit Cost was 502.54 while Swaziland's Units Sold was 9,915 and Unit Cost was 524.96. Both has the same Sales Channel as Offline.
 
 ### 6.	Show the dataframe in group by “Region” and count
@@ -123,6 +126,8 @@ worldsales.groupBy("region").count().show()
 ![Q5 ](https://user-images.githubusercontent.com/70437668/139508998-7629e595-4100-4179-8564-fb2307e26dce.png)
 
 ![Count by Region](https://user-images.githubusercontent.com/70437668/139518778-ac9ba5d1-78c1-4c9e-8155-ff0d17553026.jpg)
+
+![Count by Region](https://user-images.githubusercontent.com/70437668/140601843-08e654c9-a3b9-4149-ace7-dcf72abee04b.jpg)
 
 ### 7.	Create a separate dataframe with the group by results
 ```
@@ -171,6 +176,8 @@ SELECT * FROM Regionview
 
 ![Region Line](https://user-images.githubusercontent.com/70437668/139518787-ddf51553-d2ee-4b53-83aa-8c2739804e62.jpg)
 
+![Region Line](https://user-images.githubusercontent.com/70437668/140601855-10241767-0f1d-4057-9d2b-0c425d080e98.jpg)
+
 The Line chart illustrates the dynamic Sales & Trading activities between Europe and Sub-Saharan Africa. But there was no energetic performance between North America, Australia & Oceania and Sub-Sharan Africa.
 
 ### 11.	Using SQL select from the “Salesview” view – the region and sum of units sold and group by region and display in a data grid view 
@@ -184,6 +191,8 @@ GROUP BY region
 ![Q10](https://user-images.githubusercontent.com/70437668/139509057-dad4d738-e4d3-4a9e-ae11-a5bca4cf4ac8.png)
 
 ![Region vs Sum Units Sold](https://user-images.githubusercontent.com/70437668/139518793-ecd9e204-17dd-491e-ab75-12a4dccb7949.jpg)
+
+![Region vs Sum Units Sold](https://user-images.githubusercontent.com/70437668/140601858-dc598708-a75f-4cf5-8770-eed01cd26015.jpg)
 
 There was a positive correlation of Sum Units Sold between Europe and Sub-Saharan Africa. These two regions and continents had the highest Sum Units Sold. In contrast, North America, Australia & Oceania had the lowest Sum Units Sold. Other regions and continents played moderately around the average Sum Units Sold.
 
@@ -213,15 +222,25 @@ GROUP BY region
 
 ![Cost, Revenue, Profit between Regions](https://user-images.githubusercontent.com/70437668/139518802-4a4e7f3a-f2a0-4072-9b97-860288748176.jpg)
 
+![Cost, Revenue, Profit between Regions](https://user-images.githubusercontent.com/70437668/140601862-6fe45b5c-8998-4af1-b44b-ddf9c52862c1.jpg)
+
 The correlations between these fields between Regions were the same. Europe and Sub-Saharan Africa gained the highest figures in all 3 fields while North America, Australia & Oceania's fields were significantly low.
 
 ![Sum Cost between Regions on Map](https://user-images.githubusercontent.com/70437668/139518811-248cb430-3836-465d-8fe6-18b70dc26522.jpg)
 
+![Sum Cost between Country on Map](https://user-images.githubusercontent.com/70437668/140601863-5225775e-128b-4e23-a4b9-ae162957f8ed.jpg)
+
 ![Sum Profit between Regions on Map](https://user-images.githubusercontent.com/70437668/139518817-4f978d7e-8d10-4299-9aff-a17fdfe7e76e.jpg)
+
+![Total Profit by Country](https://user-images.githubusercontent.com/70437668/140601866-a7c1dbf1-960e-42fa-a493-82c979eeedd7.jpg)
 
 ![Sum Revenue between Regions on Map](https://user-images.githubusercontent.com/70437668/139518821-04aaa118-6919-4d9e-8a78-ada56d36dd30.jpg)
 
+![Total Revenue by Country on Map](https://user-images.githubusercontent.com/70437668/140601871-a5c4bfa7-ba4b-4061-bb6d-8cd6c8778fa7.jpg)
+
 ![Average Profit by Region on Map](https://user-images.githubusercontent.com/70437668/139518826-f9d1a798-4f11-4a87-9de6-65e9206ebbed.jpg)
+
+![Average Profit by Country](https://user-images.githubusercontent.com/70437668/140601876-45373ebf-00c4-460f-b723-bdfa615666a6.jpg)
 
 ### 14.	The customer is planning to open up a new store and searching for the best location for it, they need to see the Average Profit in each Region as a percentage (Pie chart) compared to other Regions
 
