@@ -1,4 +1,4 @@
-# World-Sales-Analysis-Hadoop-HDFS-Zeppelin-Spark-SQL-Scala-Tableau
+# World-Sales-Analysis-Hadoop-HDFS-Zeppelin-Spark-SQL-Scala-Tableau-Power Bi
 
 ## Overview:
 
@@ -19,6 +19,8 @@ The World Sales here is a small dataset used to demonstrate skills in both Big D
 - SQL
 
 - Tableau
+
+- Power BI
 
 ## Dataset:
 
